@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+    <h1>Register</h1>
+    {{ wtf.quick_form(form) }}
+    <br>
+    <div class="alert alert-danger" role="alert">Note: You will receive an email to verify your account</div>
+{% endblock %}

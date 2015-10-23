@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    {% if current_user.is_authenticated() %}
+    <h1>Welcome, {{ current_user.username }}!</h1>
+	      <table class="table table-striped table-hover ">
+		  <tbody>
+		   {% for user in users %}
+		    <tr class="info">
+		      <td>{{ user.username }}</td>
+		      <td>{{ user.score }}</td>
+	            </tr>
+		   {% endfor %}
+		  </tbody>
+		</table>
+           <div class="center">
+            <p>This is just a demo for the woman CTF</p>
+           </div>
+
+    {% endif %}
+{% endblock %}
