@@ -5,3 +5,4 @@ Flask-WTF==0.11
 SQLAlchemy==0.9.8
 WTForms==2.0.2
 Werkzeug==0.10.1
+flask-admin

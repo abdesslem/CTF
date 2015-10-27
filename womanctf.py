@@ -11,13 +11,16 @@ from flask.ext.bootstrap import Bootstrap
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import Required, Length, EqualTo, Email
-
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 app = Flask('__name__')
 app.config.from_object('config')
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 Bootstrap(app)
+admin = Admin(app)
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -62,6 +65,10 @@ class LoginForm(Form):
     login = StringField('Username', validators=[Required(), Length(1, 64)])
     password = PasswordField('Password', validators=[Required()])
     submit = SubmitField('Login')
+
+class FlagForm(Form):
+    flag = StringField('The Flag', validators=[Required(), Length(1, 64)])
+    submit = SubmitField('Send')
 
 class RegistrationForm(Form):
     login = StringField('Username', validators=[Required()])
@@ -115,10 +122,6 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile')
-def profile():
-    return render_template('profile.html')
-
 @app.route('/rules')
 def rules():
     return render_template('rules.html')
@@ -128,10 +131,16 @@ def scoreboard():
     users = User.query.all()
     return render_template('scoreboard.html', users=users)
 
-@app.route('/challenges')
+@app.route('/challenges',methods=["GET","POST"])
 def challenges():
-    return render_template('challenges.html')
+    form = FlagForm()
+    if form.validate_on_submit():
+    	flash('Good job')
+        return redirect(url_for('challenges'))
+    return render_template('challenges.html',form=form)
 
 db.create_all()
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Challenges, db.session))
 if __name__ == '__main__':
     app.run(debug=True)

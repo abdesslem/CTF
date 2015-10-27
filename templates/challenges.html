@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+{{super()}}
+{% endblock %}
+{% block page_content %}
+  <div class="container">
+  <div class="row">
+  <div class="alert alert-success">
+    {% if current_user.is_authenticated() %}
+    Hello, <strong>{{ current_user.username }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your rank is 97<span class="pull-right badge badge-info">
+    {{ current_user.score }}</span>
+    {% endif %}
+  </div>
+  </div>
+  </div>
+        	<div class="container" id="q">
+        		<div id="content">
+        			<div class="inside">
+        										<h1 class="q">Programming Question 1 <span class="badge badge-inverse">100 pts</span> </h1>
+        					<p class="question" style="font-size:15px;text-align:inherit">
+                    Here the description :<br/>
+                     Decode the following image to get the flag:<a href="">image</a>
+                      {{ wtf.quick_form(form) }}
+                     </p>
+
+        			</div>
+  		</div>
+      <div>
+			<ul id="bottomnav" class="unstyled">
+        <li><a href="https://github.com/abdesslem">Copyright 2015 Abdesslem Amri</a></li>
+			</ul>
+		</div>
+{% endblock %}
