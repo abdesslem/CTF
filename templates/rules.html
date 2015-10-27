@@ -1,9 +1,31 @@
 {% extends "base.html" %}
-
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+{{super()}}
+{% endblock %}
 {% block page_content %}
-    <h1>The CTF Rules</h1>
-           <div class="center">
-            <p>Here you have to write rules</p>
-           </div>
-
+    {% if current_user.is_authenticated() %}
+    <h1>Welcome, {{ current_user.username }}!</h1>
+	      <table class="table table-striped table-hover ">
+		  <tbody>
+		   {% for user in users %}
+		    <tr class="info">
+		      <td>{{ user.username }}</td>
+		      <td>{{ user.score }}</td>
+	            </tr>
+		   {% endfor %}
+		  </tbody>
+		</table>
+    {% endif %}
+    <div class="container big">
+  <div id="content">
+    <div class="inside">
+      <div class="alert alert-info">
+        <center><strong>Scoreboard has been modified to remove discrepancies due to flag sharing and other malpractice during the last hour.</strong></center>
+      </div>
+      <p></p><br><br>
+    </div>
+  </div>
 {% endblock %}

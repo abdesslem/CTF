@@ -19,7 +19,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 Bootstrap(app)
 
-
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -135,4 +134,4 @@ def challenges():
 
 db.create_all()
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(debug=True)

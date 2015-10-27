@@ -1,14 +1,134 @@
 {% extends "base.html" %}
-
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+{{super()}}
+{% endblock %}
 {% block page_content %}
+  <div class="container">
+  <div class="row">
+  <div class="alert alert-success">
     {% if current_user.is_authenticated() %}
-    <h1>Welcome, {{ current_user.username }}!</h1>
-    {% else %}
-    <h1>Welcome, Stranger!</h1>
-           <div class="center">
-            <p>This is just a demo for the woman CTF</p>
-           </div>
-
-    <p>Please <a href="{{ url_for('register') }}">Register</a> or <a href="{{ url_for('login') }}">Login</a>.</p>
+    Hello, <strong>{{ current_user.username }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your rank is 97<span class="pull-right badge badge-info">
+    {{ current_user.score }}</span>
     {% endif %}
+  </div>
+  </div>
+  </div>
+
+  	<div class="container">
+  		<div id="content">
+  			<div class="row">
+          <div class="span4">
+  					<div class="inside">
+  						<ul class="questions tabbable unstyled topic">
+  																<li class=""><a href=""class="title">Tutorials</a></li>
+  																		<li class=""><a href="">Crypto</a></li>
+  																		<li class=""><a href="">RE</a></li>
+  																		<li class=""><a href="">Exploitation</a></li>
+  																		<li class=""><a href="">Programming</a></li>
+  																		<li class=""><a href="">Forensics</a></li>
+  																		<li class="active"><a href="">Trivia</a></li>
+  																		<li><a href="">Web</a></li>
+  															</ul>
+  					</div>
+  				</div>
+  				<div class="span3">
+  					<div class="inside">
+  						<ul class="questions tabbable unstyled topic">
+  																<li class=""><a href="" class="title">Tasks</a></li>
+  																		<li class=""><a href="#Crypto">Crypto</a></li>
+  																		<li class=""><a href="#RE">RE</a></li>
+  																		<li class=""><a href="#Exploitation">Exploitation</a></li>
+  																		<li class=""><a href="#Programming">Programming</a></li>
+  																		<li class=""><a href="#Forensics">Forensics</a></li>
+  																		<li class="active"><a href="#Trivia">Trivia</a></li>
+  																		<li><a href="#Web">Web</a></li>
+  															</ul>
+  					</div>
+  				</div>
+  				<div class="span5">
+  					<div class="inside leftborder">
+  						<div class="tab-content">
+  							<div class="tab-pane fade" id="Programming">
+  								<ul class="questions unstyled">
+  									<li><a href="http://ctf.nullcon.net/challenge.php?c=0101">Programming Question 1<span class="badge">100</span></a></li>
+  									<li><a href="http://ctf.nullcon.net/challenge.php?c=0102">Programming Question 2<span class="badge">200</span></a></li>
+  									<li><a href="http://ctf.nullcon.net/challenge.php?c=0103">Programming Question 3<span class="badge">300</span></a></li>
+  									<li><a href="http://ctf.nullcon.net/challenge.php?c=0104">Programming Question 4<span class="badge">400</span></a></li>
+  									<li><a href="http://ctf.nullcon.net/challenge.php?c=0105">Programming Question 5<span class="badge">500</span></a></li>
+  								</ul>
+  								</div>
+  								<div class="tab-pane fade active in" id="Crypto">
+  									<ul class="questions unstyled">
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0201" class="solved">Crypto Question 1<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0202">Crypto Question 2<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0203">Crypto Question 3<span class="badge">200</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0204">Crypto Question 4<span class="badge">300</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0205">Crypto Question 5<span class="badge">500</span></a></li>
+  									</ul>
+  								</div>
+  								<div class="tab-pane fade" id="RE">
+  									<ul class="questions unstyled">
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0301">Reverse Engineering Question 1<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0302">Reverse Engineering Question 2<span class="badge">200</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0303">Reverse Engineering Question 3<span class="badge">300</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0304">Reverse Engineering Question 4<span class="badge">400</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0305">Reverse Engineering Question 5<span class="badge">500</span></a></li>
+  									</ul>
+  								</div>
+  								<div class="tab-pane fade" id="Exploitation">
+  									<ul class="questions unstyled">
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0401" class="solved">Exploitation Question 1<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0402" class="solved">Exploitation Question 2<span class="badge">200</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0403">Exploitation Question 3<span class="badge">300</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0404">Exploitation Question 4<span class="badge">400</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0405">Exploitation Question 5<span class="badge">400</span></a></li>
+  									</ul>
+  								</div>
+  								<div class="tab-pane fade" id="Misc">
+  									<ul class="questions unstyled">
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0501">Misc Question 1<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0502">Misc Question 2<span class="badge">200</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0503">Misc Question 3<span class="badge">300</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0504">Misc Question 4<span class="badge">400</span></a></li>
+  									</ul>
+  								</div>
+  								<div class="tab-pane fade" id="Forensics">
+  									<ul class="questions unstyled">
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0601">Forensics Question 1<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0602">Forensics Question 2<span class="badge">200</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0603">Forensics Question 3<span class="badge">300</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0604">Forensics Question 4<span class="badge">500</span></a></li>
+  									</ul>
+  								</div>
+  								<div class="tab-pane fade" id="Trivia">
+  									<ul class="questions unstyled">
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0701">Trivia Question 1<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0702">Trivia Question 2<span class="badge">200</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0703" class="solved">Trivia Question 3<span class="badge">300</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0704">Trivia Question 4<span class="badge">400</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0705">Trivia Question 5<span class="badge">500</span></a></li>
+  									</ul>
+  								</div>
+  								<div class="tab-pane fade" id="Web">
+  									<ul class="questions unstyled">
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0801" class="solved">Web Question 1<span class="badge">100</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0802" class="solved">Web Question 2<span class="badge">200</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0803" class="solved">Web Question 3<span class="badge">300</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0804" class="solved">Web Question 4<span class="badge">400</span></a></li>
+  										<li><a href="http://ctf.nullcon.net/challenge.php?c=0805">Web Question 5<span class="badge">500</span></a></li>
+  									</ul>
+  								</div>
+  							</div>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+      <div>
+			<ul id="bottomnav" class="unstyled">
+        <li><a href="https://github.com/abdesslem">Copyright 2015 Abdesslem Amri</a></li>
+			</ul>
+		</div>
 {% endblock %}

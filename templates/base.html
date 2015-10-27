@@ -2,6 +2,7 @@
 
 {% block title %}Woman CTF 0.0.1 {% endblock %}
 
+
 {% block navbar %}
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
@@ -19,8 +20,6 @@
                 <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('rules') }}">Rules</a></li>
                 <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
-                <li><a href="{{ url_for('challenges') }}">Challenges</a></li>
-                <li><a href="{{ url_for('profile') }}">Profile</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated() %}
@@ -45,4 +44,17 @@
 
     {% block page_content %} {% endblock %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+{{super()}}
+<script type="text/javascript">
+                $('.tabbable a').click(function (e) {
+                        e.preventDefault();
+                        $(this).tab('show');
+                })
+</script>
+
 {% endblock %}
