@@ -6,6 +6,7 @@ import base64
 from flask import Flask, render_template, redirect, url_for, flash, session, abort, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
 from flask.ext.login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.wtf import Form
@@ -56,6 +57,9 @@ class Challenges(db.Model):
     score = db.Column(db.String(20))
     flag = db.Column(db.String(40))
 
+    def __repr__(self):
+        return '<Challenges %r>' % self.name
+
 @login_manager.user_loader
 def load_user(user_id):
     """User loader callback for Flask-Login."""
@@ -78,9 +82,14 @@ class RegistrationForm(Form):
                                    validators=[Required(), EqualTo('password')])
     school = StringField()
     submit = SubmitField('Register')
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    challenges = Challenges.query.all()
+    query = db.session.query(Challenges.category.distinct().label("category"))
+    categories = [row.category for row in query.all()]
+    #tasks = Challenges.query.group_by(Challenges.category).all()
+    return render_template('index.html', challenges=challenges, categories=categories)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -128,7 +137,7 @@ def rules():
 
 @app.route('/scoreboard')
 def scoreboard():
-    users = User.query.all()
+    users = User.query.order_by(desc(User.score)).all()
     return render_template('scoreboard.html', users=users)
 
 @app.route('/challenges',methods=["GET","POST"])

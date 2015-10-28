@@ -7,16 +7,6 @@
 {{super()}}
 {% endblock %}
 {% block page_content %}
-  <div class="container">
-  <div class="row">
-  <div class="alert alert-success">
-    {% if current_user.is_authenticated() %}
-    Hello, <strong>{{ current_user.username }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your rank is 97<span class="pull-right badge badge-info">
-    {{ current_user.score }}</span>
-    {% endif %}
-  </div>
-  </div>
-  </div>
         	<div class="container" id="q">
         		<div id="content">
         			<div class="inside">
@@ -29,9 +19,4 @@
 
         			</div>
   		</div>
-      <div>
-			<ul id="bottomnav" class="unstyled">
-        <li><a href="https://github.com/abdesslem">Copyright 2015 Abdesslem Amri</a></li>
-			</ul>
-		</div>
 {% endblock %}
