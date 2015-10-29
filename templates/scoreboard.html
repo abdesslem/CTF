@@ -25,9 +25,11 @@
               </tr>
             </thead>
             <tbody>
-              {% for user in users %}
+                 {% set count = 1 %}
+                 {% for user in users %}
                 <tr class="info">
-                  <td>1</td>
+                  <td>{{ count }}</td>
+                  {% set count = count + 1 %}
                   <td>{{ user.username }}</td>
                   <td>{{ user.score }}</td>
                 </tr>
