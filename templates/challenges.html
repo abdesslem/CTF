@@ -10,10 +10,9 @@
         	<div class="container" id="q">
         		<div id="content">
         			<div class="inside">
-        										<h1 class="q">Programming Question 1 <span class="badge badge-inverse">100 pts</span> </h1>
+        										<h1 class="q">{{challenge.name}}<span class="badge badge-inverse">{{challenge.score}} pts</span> </h1>
         					<p class="question" style="font-size:15px;text-align:inherit">
-                    Here the description :<br/>
-                     Decode the following image to get the flag:<a href="">image</a>
+                      {{challenge.info | safe }}
                       {{ wtf.quick_form(form) }}
                      </p>
 

@@ -31,6 +31,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(120))
     school = db.Column(db.String(120))
     score = db.Column(db.String(20))
+    solved = db.Column(db.String(400))
     #def __init__(self, **kwargs):
     #    super(User, self).__init__(**kwargs)
 
@@ -52,8 +53,8 @@ class Challenges(db.Model):
     __tablename__ = 'challenges'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
-    category = db.Column(db.String(80), unique=True)
-    info = db.Column(db.String(400))
+    category = db.Column(db.String(80))
+    info = db.Column(db.String(800))
     score = db.Column(db.String(20))
     flag = db.Column(db.String(40))
 
@@ -64,6 +65,15 @@ class Challenges(db.Model):
 def load_user(user_id):
     """User loader callback for Flask-Login."""
     return User.query.get(int(user_id))
+
+def rank(user_name):
+    users = User.query.order_by(desc(User.score)).all()
+    myuser = User.query.filter_by(username=user_name).first()
+    l = []
+    for user in users :
+        l.append(user.score)
+    return int(l.index(myuser.score)) + 1
+
 
 class LoginForm(Form):
     login = StringField('Username', validators=[Required(), Length(1, 64)])
@@ -85,11 +95,15 @@ class RegistrationForm(Form):
 
 @app.route('/')
 def index():
+    if not current_user.is_authenticated():
+        # if user is logged in we get out of here
+        return redirect(url_for('login'))
     challenges = Challenges.query.all()
     query = db.session.query(Challenges.category.distinct().label("category"))
     categories = [row.category for row in query.all()]
+    ranking = rank(current_user.username)
     #tasks = Challenges.query.group_by(Challenges.category).all()
-    return render_template('index.html', challenges=challenges, categories=categories)
+    return render_template('index.html', challenges=challenges, categories=categories, ranking=ranking)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -132,21 +146,28 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/rules')
+@login_required
 def rules():
     return render_template('rules.html')
 
 @app.route('/scoreboard')
+@login_required
 def scoreboard():
     users = User.query.order_by(desc(User.score)).all()
     return render_template('scoreboard.html', users=users)
 
-@app.route('/challenges',methods=["GET","POST"])
-def challenges():
+@app.route('/challenges/<challenge_name>',methods=["GET","POST"])
+@login_required
+def challenges(challenge_name):
     form = FlagForm()
-    if form.validate_on_submit():
-    	flash('Good job')
-        return redirect(url_for('challenges'))
-    return render_template('challenges.html',form=form)
+    challenge = Challenges.query.filter_by(name=challenge_name).first()
+    if form.validate_on_submit() and challenge.flag == form.flag.data :
+        flash('Good Job Valid Flag')
+        return redirect(url_for('index'))
+    elif form.validate_on_submit() and challenge.flag != form.flag.data :
+        flash('Wrong Flag')
+        return render_template('challenges.html',form=form, challenge=challenge )
+    return render_template('challenges.html',form=form, challenge=challenge )
 
 db.create_all()
 admin.add_view(ModelView(User, db.session))
