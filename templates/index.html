@@ -6,16 +6,16 @@
 {{super()}}
 {% endblock %}
 {% block page_content %}
-  <div class="container">
-  <div class="row">
-  <div class="alert alert-success">
     {% if current_user.is_authenticated() %}
-    Hello, <strong>{{ current_user.username }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your rank is 97<span class="pull-right badge badge-info">
+    <div class="container">
+    <div class="row">
+    <div class="alert alert-success">
+    Hello, <strong>{{ current_user.username }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your rank is {{ranking}}<span class="pull-right badge badge-info">
     {{ current_user.score }}</span>
+    </div>
+    </div>
+    </div>
     {% endif %}
-  </div>
-  </div>
-  </div>
 
   	<div class="container">
   		<div id="content">
@@ -38,8 +38,8 @@
   					<div class="inside">
   						<ul class="questions tabbable unstyled topic">
   																<li class=""><a href="" class="title">Tasks</a></li>
-                                    {% for challenge in challenges %}
-  																		<li class=""><a href="#{{challenge.category}}">{{ challenge.category }}</a></li>
+                                    {% for category in categories %}
+  																		<li class=""><a href="#{{category}}">{{ category }}</a></li>
                                       {% endfor %}
   															</ul>
   					</div>
@@ -52,7 +52,7 @@
   								<ul class="questions unstyled">
                       {% for challenge in challenges %}
                       {% if challenge.category == category %}
-  									<li><a href="" class="solved">{{ challenge.name }}<span class="badge">100</span></a></li>
+  									<li><a href="/challenges/{{challenge.name}}" class="solved">{{ challenge.name }}<span class="badge">100</span></a></li>
                     {% endif %}
                     {% endfor %}
                   </ul>
@@ -65,7 +65,7 @@
   		</div>
       <div>
 			<ul id="bottomnav" class="unstyled">
-        <li><a href="https://github.com/abdesslem">Copyright 2015 Abdesslem Amri</a></li>
+        <li><a href="https://accessnow.org">Copyright 2015 Access Now</a></li>
 			</ul>
 		</div>
 {% endblock %}
