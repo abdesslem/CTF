@@ -14,6 +14,7 @@ from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import Required, Length, EqualTo, Email
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+import datetime
 app = Flask('__name__')
 app.config.from_object('config')
 db = SQLAlchemy(app)
@@ -32,6 +33,8 @@ class User(UserMixin, db.Model):
     school = db.Column(db.String(120))
     score = db.Column(db.String(20))
     solved = db.Column(db.String(400))
+    lastSubmit = db.Column(db.DateTime)
+    #timestamp=datetime.datetime.utcnow()
     #def __init__(self, **kwargs):
     #    super(User, self).__init__(**kwargs)
 
@@ -66,6 +69,19 @@ def load_user(user_id):
     """User loader callback for Flask-Login."""
     return User.query.get(int(user_id))
 
+
+# The context processor makes the rank function available to all templates
+@app.context_processor
+def utility_processor():
+    def rank(user_name):
+        users = User.query.order_by(desc(User.score)).all()
+        myuser = User.query.filter_by(username=user_name).first()
+        l = []
+        for user in users :
+            l.append(user.score)
+        return int(l.index(myuser.score)) + 1
+    return dict(rank=rank)
+
 def rank(user_name):
     users = User.query.order_by(desc(User.score)).all()
     myuser = User.query.filter_by(username=user_name).first()
@@ -73,7 +89,6 @@ def rank(user_name):
     for user in users :
         l.append(user.score)
     return int(l.index(myuser.score)) + 1
-
 
 class LoginForm(Form):
     login = StringField('Username', validators=[Required(), Length(1, 64)])
@@ -112,11 +127,13 @@ def register():
 	user = User(username=form.login.data,
                        email=form.email.data,
 		       password=form.password.data,
-		       school=form.school.data)
+		       school=form.school.data,
+		       score='0',
+		       solved='')
 	db.session.add(user)
 	db.session.commit()
 	flash('Thank you for registration')
-	return render_template('index.html')
+	return redirect(url_for('index'))
     return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -154,7 +171,14 @@ def rules():
 @login_required
 def scoreboard():
     users = User.query.order_by(desc(User.score)).all()
-    return render_template('scoreboard.html', users=users)
+    winners = []
+    temps = []
+    for user in users :
+        if rank(user.username) == 1 :
+	    winners.append(user)
+            temps.append(user.lastSubmit)
+    winnertime = min(temps)
+    return render_template('scoreboard.html', users=users, winnertime=winnertime)
 
 @app.route('/challenges/<challenge_name>',methods=["GET","POST"])
 @login_required
@@ -162,6 +186,12 @@ def challenges(challenge_name):
     form = FlagForm()
     challenge = Challenges.query.filter_by(name=challenge_name).first()
     if form.validate_on_submit() and challenge.flag == form.flag.data :
+	# Update user's score and solved tasks
+	user = User.query.filter_by(username=current_user.username).first()
+	user.score = str(int(user.score) + int(challenge.score))
+	user.solved = user.solved + ',' + challenge.name
+	user.lastSubmit = datetime.datetime.utcnow()
+	db.session.commit()
         flash('Good Job Valid Flag')
         return redirect(url_for('index'))
     elif form.validate_on_submit() and challenge.flag != form.flag.data :

@@ -6,24 +6,21 @@
 {{super()}}
 {% endblock %}
 {% block page_content %}
-    {% if current_user.is_authenticated() %}
-    <h1>Welcome, {{ current_user.username }}!</h1>
-	      <table class="table table-striped table-hover ">
-		  <tbody>
-		   {% for user in users %}
-		    <tr class="info">
-		      <td>{{ user.username }}</td>
-		      <td>{{ user.score }}</td>
-	            </tr>
-		   {% endfor %}
-		  </tbody>
-		</table>
-    {% endif %}
     <div class="container big">
   <div id="content">
     <div class="inside">
       <div class="alert alert-info">
-        <center><strong>Scoreboard has been modified to remove discrepancies due to flag sharing and other malpractice during the last hour.</strong></center>
+        <center><strong>You have to read these rules !!</strong></center>
+	<br><br>
+        <ul>
+<li>During the competition, the discussions between the teams are not permitted. Offenders will be immediately excluded in the rest of competitions.</li>
+<li>    
+The teams should not attack the server platform of the match. If any security vulnerability is identified on the platform, it should be noticed to the organizers.</li>
+<li>The match registration should be completed as a team. The domestic player can log onto the system using individual CTF account.</li>
+<li>The winning teams must submit the reports showing detailed solutions during online question test in the 24 hours after the quals.</li>
+<li>If any team with violation against the game rule is identified, it will be disqualified in this CTF.</li>
+<li>The Organizing Committee possesses the final interpretation of the rules of the game.</li>
+</ul>
       </div>
       <p></p><br><br>
     </div>
