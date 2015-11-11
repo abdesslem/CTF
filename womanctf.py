@@ -199,7 +199,7 @@ def rules():
 @app.route('/scoreboard')
 @login_required
 def scoreboard():
-    users = User.query.order_by(desc(User.score)).all()
+    users = User.query.filter(User.username!='admin').order_by(desc(User.score)).all()
     winners = []
     temps = []
     for user in users :
