@@ -5,6 +5,7 @@ import os
 import base64
 from flask import Flask, render_template, redirect, url_for, flash, session, abort, request
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_security import Security
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
 from flask.ext.login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -14,6 +15,8 @@ from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import Required, Length, EqualTo, Email
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.contrib import sqla
+from flask_admin import helpers as admin_helpers
 import datetime
 app = Flask('__name__')
 app.config.from_object('config')
@@ -22,6 +25,32 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 Bootstrap(app)
 admin = Admin(app)
+
+
+
+# Create customized model view class
+class MyModelView(sqla.ModelView):
+
+    def is_accessible(self):
+        if not current_user.is_active() or not current_user.is_authenticated():
+            return False
+
+        if current_user.username == "admin":
+            return True
+
+        return False
+
+    def _handle_view(self, name, **kwargs):
+        """
+        Override builtin _handle_view in order to redirect users when a view is not accessible.
+        """
+        if not self.is_accessible():
+            if current_user.is_authenticated():
+                # permission denied
+                abort(403)
+            else:
+                # login
+                return redirect(url_for('security.login', next=request.url))
 
 
 class User(UserMixin, db.Model):
@@ -200,7 +229,7 @@ def challenges(challenge_name):
     return render_template('challenges.html',form=form, challenge=challenge )
 
 db.create_all()
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Challenges, db.session))
+admin.add_view(MyModelView(User, db.session))
+admin.add_view(MyModelView(Challenges, db.session))
 if __name__ == '__main__':
     app.run(debug=True)
