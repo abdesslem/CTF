@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+<script src="{{ url_for('static', filename='js/tooltip.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ctf.css') }}">
 {{super()}}
 {% endblock %}
 {% block page_content %}
     {% if current_user.is_authenticated() %}
     <div class="container">
     <div class="row">
-    <div class="alert alert-success">
+    <div class="alert alert-info">
     Hello, <strong>{{ current_user.username }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your rank is {{ranking}}<span class="pull-right badge badge-info">
     {{ current_user.score }}</span>
     </div>
@@ -17,62 +17,30 @@
     </div>
     {% endif %}
 
-  	<div class="container">
-  		<div id="content">
+    <div class="row">
+  		<div class="col-md-12">
   			<div class="row">
-          <div class="span4">
-  					<div class="inside">
-  						<ul class="questions tabbable unstyled topic">
-  																<li class=""><a href=""class="title">Tutorials</a></li>
-  																		<li class=""><a href="">Crypto</a></li>
-  																		<li class=""><a href="">RE</a></li>
-  																		<li class=""><a href="">Exploitation</a></li>
-  																		<li class=""><a href="">Programming</a></li>
-  																		<li class=""><a href="">Forensics</a></li>
-  																		<li class="active"><a href="">Trivia</a></li>
-  																		<li><a href="">Web</a></li>
-  															</ul>
-  					</div>
+  				<div class="col-md-2">
   				</div>
-  				<div class="span3">
-  					<div class="inside">
-  						<ul class="questions tabbable unstyled topic">
-  																<li class=""><a href="" class="title">Tasks</a></li>
-                                    {% for category in categories %}
-  																		<li class=""><a href="#{{category}}">{{ category }}</a></li>
-                                      {% endfor %}
-  															</ul>
-  					</div>
+  				<div id="bodytd" class="col-md-8"><br><br>
+            <a href='http://hackyou.ctf.su/tasks/web100' class='tile' style='background-color: #564aee; text-decoration: none'><span class='cat'>Web</span><br/><span class='cost'>100</span><br/><span class='desc'>Voting</span></a>
+            <a href='http://hackyou.ctf.su/tasks/crypto300' class='big tile' style='background-color: #ffa800; text-decoration: none'><span class='cat'>Crypto</span><br/><span class='cost'>300</span><br/><span class='desc'>Matrix</span></a>
+            <a href='http://hackyou.ctf.su/tasks/ppc400' class='tile' style='background-color: #57d833; text-decoration: none'><span class='cat'>PPC</span><br/><span class='cost'>400</span><br/><span class='desc'>Broken Marquee</span></a>
+            <a href='http://hackyou.ctf.su/tasks/web300' class='tile' style='background-color: #564aee; text-decoration: none'><span class='cat'>Web</span><br/><span class='cost'>300</span><br/><span class='desc'>AngryBird</span></a>
+            <a href='http://hackyou.ctf.su/tasks/net300' class='tile' style='background-color: #8e43c9; text-decoration: none'><span class='cat'>Network</span><br/><span class='cost'>300</span><br/><span class='desc'>HTTPZ</span></a>
+            <a href='http://hackyou.ctf.su/tasks/net200' class='tile' style='background-color: #8e43c9; text-decoration: none'><span class='cat'>Network</span><br/><span class='cost'>200</span><br/><span class='desc'>Jailbreaker</span></a>
+            <a href='http://hackyou.ctf.su/tasks/web400' class='tile' style='background-color: #564aee; text-decoration: none'><span class='cat'>Web</span><br/><span class='cost'>400</span><br/><span class='desc'>PHPwning</span></a>
+            <a href='http://hackyou.ctf.su/tasks/crypto100' class='tile' style='background-color: #ffa800; text-decoration: none'><span class='cat'>Crypto</span><br/><span class='cost'>100</span><br/><span class='desc'>Easy one</span></a>
+            <a href='http://hackyou.ctf.su/tasks/rev100' class='tile' style='background-color: #ea0221; text-decoration: none'><span class='cat'>Reverse</span><br/><span class='cost'>100</span><br/><span class='desc'>NotEasyTask</span></a>
+            <a href='http://hackyou.ctf.su/tasks/crypto200' class='tile' style='background-color: #ffa800; text-decoration: none'><span class='cat'>Crypto</span><br/><span class='cost'>200</span><br/><span class='desc'>Hashme</span></a>
   				</div>
-  				<div class="span5">
-  					<div class="inside leftborder">
-  						<div class="tab-content">
-                {% for category in categories %}
-                {% if category == "Programming" %}
-  							<div class="tab-pane fade active in " id="{{category}}">
-                  {% else %}
-                <div class="tab-pane fade" id="{{category}}">
-                  {% endif %}
-  								<ul class="questions unstyled">
-                      {% for challenge in challenges %}
-                      {% if challenge.category == category %}
-                      {% if challenge.name in current_user.solved %}
-  									<li><a href="/challenges/{{challenge.name}}" class="solved">{{ challenge.name }}<span class="badge">{{ challenge.score }}</span></a></li>
-                    {% else %}
-                    <li><a href="/challenges/{{challenge.name}}" >{{ challenge.name }}<span class="badge">{{ challenge.score }}</span></a></li>
-                    {% endif %}
-                    {% endif %}
-                    {% endfor %}
-                  </ul>
-  								</div>
-                  {% endfor %}
-  							</div>
-  					</div>
+  				<div class="col-md-2">
   				</div>
   			</div>
   		</div>
+  	</div>
       <div>
-			<ul id="bottomnav" class="unstyled">
+			<ul id="bottomnav" class="unstyled"><br><br>
         <li><a href="https://accessnow.org">Copyright 2015 Access Now</a></li>
 			</ul>
 		</div>

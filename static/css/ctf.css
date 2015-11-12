@@ -1,0 +1,7 @@
+.tile { display: block; width: 180px; height: 140px; margin-bottom: 4px; margin-right: 4px; padding: 10px; color: #FFF; float: left; }
+.tile.big { width: 360px; }
+.tile.solved { opacity: 0.4}
+.tile:hover { opacity: 0.8; color:#fff}
+.tile .cat { font-size: 20px; }
+.tile .cost { font-size: 40px; }
+.tile .desc { display: table-cell; vertical-align: bottom; height: 32px; }

@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
-{{super()}}
-{% endblock %}
 {% block page_content %}
         	<div class="container" id="q">
         		<div id="content">
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4"><br><br>
         			<div class="inside">
         										<h1 class="q">{{challenge.name}}<span class="badge badge-inverse">{{challenge.score}} pts</span> </h1>
         					<p class="question" style="font-size:15px;text-align:inherit">
                       {{challenge.info | safe }}
-                      {{ wtf.quick_form(form) }}
+                      {{ wtf.quick_form(form, extra_classes="well") }}
                      </p>
-
         			</div>
+            </div>
+    				<div class="col-md-4">
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+
   		</div>
 {% endblock %}

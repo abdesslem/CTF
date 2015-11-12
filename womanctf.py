@@ -24,6 +24,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 Bootstrap(app)
+app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 admin = Admin(app)
 
 
