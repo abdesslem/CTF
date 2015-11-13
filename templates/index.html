@@ -23,25 +23,22 @@
   				<div class="col-md-2">
   				</div>
   				<div id="bodytd" class="col-md-8"><br><br>
-            <a href='http://hackyou.ctf.su/tasks/web100' class='tile' style='background-color: #564aee; text-decoration: none'><span class='cat'>Web</span><br/><span class='cost'>100</span><br/><span class='desc'>Voting</span></a>
-            <a href='http://hackyou.ctf.su/tasks/crypto300' class='big tile' style='background-color: #ffa800; text-decoration: none'><span class='cat'>Crypto</span><br/><span class='cost'>300</span><br/><span class='desc'>Matrix</span></a>
-            <a href='http://hackyou.ctf.su/tasks/ppc400' class='tile' style='background-color: #57d833; text-decoration: none'><span class='cat'>PPC</span><br/><span class='cost'>400</span><br/><span class='desc'>Broken Marquee</span></a>
-            <a href='http://hackyou.ctf.su/tasks/web300' class='tile' style='background-color: #564aee; text-decoration: none'><span class='cat'>Web</span><br/><span class='cost'>300</span><br/><span class='desc'>AngryBird</span></a>
-            <a href='http://hackyou.ctf.su/tasks/net300' class='tile' style='background-color: #8e43c9; text-decoration: none'><span class='cat'>Network</span><br/><span class='cost'>300</span><br/><span class='desc'>HTTPZ</span></a>
-            <a href='http://hackyou.ctf.su/tasks/net200' class='tile' style='background-color: #8e43c9; text-decoration: none'><span class='cat'>Network</span><br/><span class='cost'>200</span><br/><span class='desc'>Jailbreaker</span></a>
-            <a href='http://hackyou.ctf.su/tasks/web400' class='tile' style='background-color: #564aee; text-decoration: none'><span class='cat'>Web</span><br/><span class='cost'>400</span><br/><span class='desc'>PHPwning</span></a>
-            <a href='http://hackyou.ctf.su/tasks/crypto100' class='tile' style='background-color: #ffa800; text-decoration: none'><span class='cat'>Crypto</span><br/><span class='cost'>100</span><br/><span class='desc'>Easy one</span></a>
-            <a href='http://hackyou.ctf.su/tasks/rev100' class='tile' style='background-color: #ea0221; text-decoration: none'><span class='cat'>Reverse</span><br/><span class='cost'>100</span><br/><span class='desc'>NotEasyTask</span></a>
-            <a href='http://hackyou.ctf.su/tasks/crypto200' class='tile' style='background-color: #ffa800; text-decoration: none'><span class='cat'>Crypto</span><br/><span class='cost'>200</span><br/><span class='desc'>Hashme</span></a>
-  				</div>
+            {% set list = ['#57d833' , '#564aee', '#8e43c9', '#ffa800', '#ea0221']%}
+            {% for challenge in challenges %}
+            {% if challenge.score|int < 300 %}
+            <a href='/challenges/{{challenge.name}}' class='tile {{ 'solved' if challenge.name in current_user.solved else '' }}' style='background-color: {{ list|random }}; text-decoration: none'>
+            <span class='cat'>{{challenge.category}}</span><br/><span class='cost'>{{challenge.score}}</span><br/>
+            <span class='desc'>{{challenge.name}}</span></a>
+            {% else %}
+            <a href='/challenges/{{challenge.name}}' class='tile big {{ 'solved' if challenge.name in current_user.solved else '' }}' style='background-color: {{ list|random }}; text-decoration: none'>
+            <span class='cat'>{{challenge.category}}</span><br/><span class='cost'>{{challenge.score}}</span><br/>
+            <span class='desc'>{{challenge.name}}</span></a>
+            {% endif %}
+            {% endfor %}
+          </div>
   				<div class="col-md-2">
   				</div>
   			</div>
   		</div>
   	</div>
-      <div>
-			<ul id="bottomnav" class="unstyled"><br><br>
-        <li><a href="https://accessnow.org">Copyright 2015 Access Now</a></li>
-			</ul>
-		</div>
 {% endblock %}

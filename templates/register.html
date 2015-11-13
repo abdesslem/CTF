@@ -2,8 +2,20 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block page_content %}
-    <h1>Register</h1>
-    {{ wtf.quick_form(form) }}
-    <br>
     <div class="alert alert-danger" role="alert">Note: You will receive an email to verify your account</div>
+    <h1>Register</h1>
+    <div class="row">
+  		<div class="col-md-12">
+  			<div class="row">
+  				<div class="col-md-4">
+  				</div>
+  				<div class="col-md-4"><br><br>
+      {{ wtf.quick_form(form, extra_classes="well") }}
+  				</div>
+  				<div class="col-md-4">
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+    <br>
 {% endblock %}

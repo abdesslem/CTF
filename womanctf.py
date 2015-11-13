@@ -36,7 +36,7 @@ class MyModelView(sqla.ModelView):
         if not current_user.is_active() or not current_user.is_authenticated():
             return False
 
-        if current_user.username == "admin":
+        if current_user.username == "test":
             return True
 
         return False

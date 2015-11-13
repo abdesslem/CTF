@@ -1,8 +1,10 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}Woman CTF 0.0.1 {% endblock %}
-
-
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+{{super()}}
+{% endblock %}
 {% block navbar %}
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
@@ -57,5 +59,4 @@
                         $(this).tab('show');
                 })
 </script>
-
 {% endblock %}
