@@ -11,6 +11,7 @@ from sqlalchemy import desc
 from flask.ext.login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.wtf import Form
+from flask.ext.wtf.recaptcha import RecaptchaField
 from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import Required, Length, EqualTo, Email
 from flask_admin import Admin
@@ -165,6 +166,7 @@ class RegistrationForm(Form):
     password_again = PasswordField('Password again',
                                    validators=[Required(), EqualTo('password')])
     school = StringField()
+    recaptcha = RecaptchaField()
     submit = SubmitField('Register')
 
 @app.route('/')
