@@ -8,3 +8,4 @@ WTForms==2.0.2
 Werkzeug==0.10.1
 flask-admin
 flask_security
+Flask-Mail
