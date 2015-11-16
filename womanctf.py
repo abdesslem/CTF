@@ -87,7 +87,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(80))
     password_hash = db.Column(db.String(120))
     school = db.Column(db.String(120))
     score = db.Column(db.String(20))
@@ -188,6 +188,10 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            flash('Username already exists.')
+            return redirect(url_for('register'))
 	user = User(username=form.login.data,
                        email=form.email.data,
 		       password=form.password.data,
