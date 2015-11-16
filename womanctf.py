@@ -152,6 +152,9 @@ def index():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
+    if current_user.is_authenticated():
+        # if user is logged in we get out of here
+        return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
 	user = User(username=form.login.data,
@@ -171,6 +174,9 @@ def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will
     # handle this for us, and we use a custom LoginForm to validate.
+    if current_user.is_authenticated():
+        # if user is logged in we get out of here
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         # Login and validate the user.
