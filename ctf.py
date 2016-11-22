@@ -6,12 +6,12 @@ import base64
 from flask import Flask, render_template, redirect, url_for, flash, session, abort, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_security import Security
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
-from flask.ext.login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.wtf import Form
-from flask.ext.wtf.recaptcha import RecaptchaField
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
+from flask_bootstrap import Bootstrap
+from flask_wtf import Form
+from flask_wtf.recaptcha import RecaptchaField
 from wtforms import StringField, PasswordField, SubmitField, RadioField
 from wtforms.validators import Required, Length, EqualTo, Email
 from flask_admin import Admin
