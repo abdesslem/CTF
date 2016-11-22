@@ -188,7 +188,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(username=form.login.data).first()
         if user is not None:
             flash('Username already exists.')
             return redirect(url_for('register'))
