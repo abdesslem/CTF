@@ -7,5 +7,5 @@ SQLAlchemy==1.2.7
 WTForms==2.1
 Werkzeug==0.14.1
 flask-admin==1.5.1
-flask_security
+flask_security==3.0.0
 Flask-Mail
